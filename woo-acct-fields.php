@@ -7,7 +7,7 @@
  * Plugin Name:       OSC WooCommerce Accounting Fields
  * Plugin URI:        http://siteapeel.com/plugins/woo-acct-fields
  * Description:       Adds Fields for Exporting Orders with Accounting Fields
- * Version:           0.2.57
+ * Version:           1.0.10
  * Author:            Matthew Dever
  * Author URI:        http://siteapeel.com
  * License:           GPL-2.0+
@@ -35,5 +35,23 @@ function waf_wc_input_start() {
         $admin->init();
     } else {
 
+    }
+}
+//logging stuff
+if (!function_exists('write_parser_log')) {
+    function write_parser_log ( $log )  {
+      $pluginfo = get_plugin_data(__FILE__);
+      $version = $pluginfo['Version'];
+      $ver = "[OSC-QBC ".$version."] ";
+
+        // if ( true === WP_DEBUG ) {
+            if ( is_array( $log ) || is_object( $log ) ) {
+              error_log($ver);
+              error_log( print_r( $log, true ) );
+            } else {
+              $log = $ver.$log;
+              error_log( $log );
+            }
+        // }
     }
 }
